@@ -1,0 +1,6 @@
+expressjs/node_modules
+
+netlify-lambda/node_modules
+netlify-lambda/.netlify
+netlify-lambda/.env
+netlify-lambda/.gitignore

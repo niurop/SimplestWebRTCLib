@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+    <script src="../library/SimplestWebRTCLib.js"></script>
+    <script src="../library/matchingLib.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="tic-tac-toe/style.css" />
+    <title>WebRTC Tic-Tac-Toe</title>
+  </head>
+  <body>
+    <div id="connectionScreen">
+      <span>Write the same name in both tabs:</span>
+      <div
+        contenteditable="true"
+        id="name">
+        example
+      </div>
+      <button id="initiate">Initiate the connection</button>
+      <button id="answer">Answer the connection</button>
+    </div>
+    <div
+      id="connectingScreen"
+      class="hidden">
+      <span id="nameInfo">Connecting</span>
+      <button id="stopConnecting">Cancel</button>
+    </div>
+    <div
+      id="gameScreen"
+      class="gameContainer"></div>
+    <script src="tic-tac-toe/index.js"></script>
+  </body>
+</html>

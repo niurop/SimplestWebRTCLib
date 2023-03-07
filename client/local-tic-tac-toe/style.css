@@ -1,0 +1,80 @@
+body {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.gameContainer {
+  text-align: center;
+  position: relative;
+}
+
+.score-container {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  font-size: 3em;
+  font-weight: bold;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.score-wins {
+  color: greenyellow;
+}
+
+.score-draws {
+  color: black;
+}
+
+.score-losses {
+  color: red;
+}
+
+#board {
+  min-height: 20vw;
+  max-width: min(600px, 80vw);
+  max-height: 80vh;
+  margin: auto;
+  display: block;
+}
+
+#board rect.cell {
+  fill: none;
+}
+#board.your-move rect.cell.empty {
+  fill: #faebd740;
+}
+
+#board.your-move rect.cell.empty:hover {
+  cursor: pointer;
+  fill: #faebd780;
+}
+
+#board.your-move rect.cell.empty:active {
+  fill: #faebd7ff;
+}
+
+#board.your-move path.mark.hover {
+  stroke: gray;
+}
+
+#board.your-move path.mark {
+  pointer-events: none;
+}
+
+.controls {
+  width: 100%;
+}
+
+.info-box {
+  display: block;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.control-button {
+  display: block;
+  font-size: 2em;
+  font-weight: bold;
+  margin: auto;
+  min-width: 70%;
+}

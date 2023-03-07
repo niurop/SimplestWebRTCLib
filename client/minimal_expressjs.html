@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <script src="../library/SimplestWebRTCLib.js"></script>
+
+    <title>Minimal webRTC express.js example</title>
+  </head>
+  <body>
+    <input id="id" />
+    <button id="generateOffer">Create Offer</button>
+    <button id="generateAnswer">Answer</button>
+    <script>
+      const SeverURL = '//localhost:8000';
+
+      const POST = (url, data) =>
+        fetch(url, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        }).then(e => e.json());
+
+      const webRTC = new SimplestWebRTCConnection();
+
+      document.getElementById('generateOffer').onclick = async () => {
+        const id = document.getElementById('id').value;
+        const offer = await webRTC.createOffer();
+        const answer = await POST(SeverURL + '/offer', { id, offer });
+        await webRTC.answerAnswer(answer);
+      };
+
+      document.getElementById('generateAnswer').onclick = async () => {
+        const id = document.getElementById('id').value;
+        const offer = await POST(SeverURL + '/askforoffer', { id });
+        const answer = await webRTC.createAnswer(offer);
+        await POST(SeverURL + '/answer', { id, answer });
+      };
+    </script>
+  </body>
+</html>

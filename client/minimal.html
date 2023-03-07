@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <script src="../library/SimplestWebRTCLib.js"></script>
+
+    <style>
+      body {
+        max-width: 600px;
+        margin: auto;
+      }
+      li {
+        margin: 3ch 0;
+      }
+      button {
+        font-weight: bold;
+      }
+      div[contenteditable='true'] {
+        width: 100%;
+        height: fit-content;
+        overflow-wrap: break-word;
+      }
+      button,
+      div[contenteditable='true'] {
+        padding: 1.5ch;
+        margin: 1ch;
+        border: none;
+        border-radius: 15px;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+          rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+      }
+    </style>
+
+    <title>Minimal webRTCLib example</title>
+  </head>
+  <body>
+    <ol>
+      <li>Open the console (usually F12).</li>
+      <li>
+        First generate the offer:
+        <br />
+        <button id="generateOffer">generateOffer</button>
+      </li>
+      <li>
+        Copy the generated offer to the same field in different browser tab:
+        <br />
+        <div
+          contenteditable="true"
+          id="offer"></div>
+      </li>
+      <li>
+        After pasting in the offer, click generateAnswer:
+        <br />
+        <button id="generateAnswer">generateAnswer</button>
+      </li>
+      <li>
+        Copy the generated answer to the same field but in the previous browser
+        tab (the one where You generated the offer):
+        <br />
+        <div
+          contenteditable="true"
+          id="answer"></div>
+      </li>
+      <li>
+        After pasting the offer click answerAnswer on the tab:
+        <br />
+        <button id="answerAnswer">answerAnswer</button>
+      </li>
+      <li>
+        Now You can send messages between the browser tabs:
+        <br />
+        <button id="sendMessage">sendMessage</button>
+      </li>
+    </ol>
+    <script>
+      const generateOffer_button = document.getElementById('generateOffer');
+      const offer_textarea = document.getElementById('offer');
+      const generateAnswer_button = document.getElementById('generateAnswer');
+      const answer_textarea = document.getElementById('answer');
+      const answerAnswer_button = document.getElementById('answerAnswer');
+      const sendMessage_button = document.getElementById('sendMessage');
+
+      offer_textarea.innerText = '';
+      answer_textarea.innerText = '';
+
+      const webRTC = new SimplestWebRTCConnection();
+
+      generateOffer_button.onclick = async () => {
+        offer_textarea.innerText = await webRTC.createOffer();
+      };
+
+      generateAnswer_button.onclick = async () => {
+        const offer = offer_textarea.innerText;
+        answer_textarea.innerText = await webRTC.createAnswer(offer);
+      };
+
+      answerAnswer_button.onclick = async () => {
+        const answer = answer_textarea.innerText;
+        await webRTC.answerAnswer(answer);
+      };
+
+      sendMessage_button.onclick = async () => {
+        webRTC.sendData('Sending some data');
+        const answer = await webRTC.sendReq('Sending some request');
+        console.log('Got answer: ', answer);
+      };
+    </script>
+  </body>
+</html>

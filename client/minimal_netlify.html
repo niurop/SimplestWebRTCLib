@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+    <script src="../library/SimplestWebRTCLib.js"></script>
+    <script src="../library/matchingLib.js"></script>
+
+    <style>
+      body {
+        max-width: 600px;
+        margin: auto;
+      }
+      li {
+        margin: 3ch 0;
+      }
+      button {
+        font-weight: bold;
+      }
+      div[contenteditable='true'] {
+        width: 100%;
+        height: fit-content;
+        overflow-wrap: break-word;
+      }
+      button,
+      div[contenteditable='true'] {
+        padding: 1.5ch;
+        margin: 1ch;
+        border: none;
+        border-radius: 15px;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+          rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+      }
+    </style>
+
+    <title>Minimal webRTCLib netlify example</title>
+  </head>
+  <body>
+    <ol>
+      <li>Open the console (usually F12).</li>
+      <li>
+        Write the same name in both tabs:
+        <div
+          contenteditable="true"
+          id="name"></div>
+      </li>
+      <li>
+        Initiate the offer:
+        <br />
+        <button id="initiate">Initiate</button>
+      </li>
+      <li>
+        Answer the offer in a different tab:
+        <button id="answer">Answer</button>
+      </li>
+      <li>
+        Now You can send messages between the browser tabs:
+        <br />
+        <button id="sendMessage">sendMessage</button>
+      </li>
+    </ol>
+    <script>
+      const name_textarea = document.getElementById('name');
+      const initiate_button = document.getElementById('initiate');
+      const answer_button = document.getElementById('answer');
+      const sendMessage_button = document.getElementById('sendMessage');
+
+      const webRTC = new SimplestWebRTCConnection();
+
+      initiate_button.onclick = async () => {
+        const name = name_textarea.innerText;
+        const matching = new MatchingLib(name, webRTC);
+        if (!(await matching.offer())) console.log('name taken');
+        matching.awaitAnswerOnInterval();
+      };
+
+      answer_button.onclick = async () => {
+        const name = name_textarea.innerText;
+        const matching = new MatchingLib(name, webRTC);
+        matching.awaitAnswerOnInterval();
+      };
+
+      sendMessage_button.onclick = async () => {
+        webRTC.sendData('Sending some data');
+        const answer = await webRTC.sendReq('Sending some request');
+        console.log('Got answer: ', answer);
+      };
+    </script>
+  </body>
+</html>
