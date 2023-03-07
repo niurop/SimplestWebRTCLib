@@ -10,6 +10,12 @@ You may want to start with the `local-tic-tac-toe.html` and then the `minimal.ht
 
 After that proceed in any order.
 
+Links You can run online:
+
+- [local-tic-tac-toe](https://niurop.github.io/SimplestWebRTCLib/client/local-tic-tac-toe)
+- [minimal](https://niurop.github.io/SimplestWebRTCLib/client/minimal)
+- [tic-tac-toe](https://niurop.github.io/SimplestWebRTCLib/client/tic-tac-toe)
+
 ## Description:
 
 WebRTC enables You to create a peer to peer connection between browser tabs over the internet without a server. The only problem is that You still need some way of negotiating the connection. This library simplifies this process:
